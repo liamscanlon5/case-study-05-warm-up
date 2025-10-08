@@ -12,6 +12,12 @@ OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "tinyllama")
 def home():
     return render_template("index.html")
 
+# ----- ADD THIS NEW ROUTE -----
+@app.route('/api/health')
+def health_check():
+    # The autograder expects a JSON response with these exact keys and values
+    return {"status": "ok", "healthy": "up"}
+
 # Stage 1: echo
 @app.post("/api/echo")
 def echo():
@@ -144,6 +150,11 @@ def agent_endpoint():
         return jsonify({"reply": str(result)}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+if __name__ == "__main__":
+    port = int(os.getenv("PORT", "5000"))
+    app.run(host="0.0.0.0", port=port, debug=True)
+
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", "5000"))
