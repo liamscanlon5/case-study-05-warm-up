@@ -12,12 +12,6 @@ OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "tinyllama")
 def home():
     return render_template("index.html")
 
-# ----- ADD THIS NEW ROUTE -----
-@app.route('/api/health')
-def health_check():
-    # The autograder expects a JSON response with these exact keys and values
-    return {"status": "ok", "healthy": "up"}
-
 # Stage 1: echo
 @app.post("/api/echo")
 def echo():
